@@ -5,6 +5,7 @@ import com.mangofactory.swagger.readers.operation.RequestMappingReader;
 import com.mangofactory.swagger.scanners.RequestMappingContext;
 import com.wordnik.swagger.model.ApiDescription;
 import com.wordnik.swagger.model.Operation;
+
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -40,8 +41,9 @@ public class ApiDescriptionReader implements Command<RequestMappingContext> {
       context.put("requestMappingPattern", cleanedRequestMappingPath);
       ApiOperationReader apiOperationReader = new ApiOperationReader(customAnnotationReaders);
       apiOperationReader.execute(context);
+      Boolean hidden = Boolean.parseBoolean((String) context.get("hidden"));
       List<Operation> operations = (List<Operation>) context.get("operations");
-      apiDescriptionList.add(new ApiDescription(path, toOption(methodName), toScalaList(operations)));
+      apiDescriptionList.add(new ApiDescription(path, toOption(methodName), toScalaList(operations), hidden));
     }
     context.put("apiDescriptionList", apiDescriptionList);
   }
