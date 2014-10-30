@@ -10,6 +10,7 @@ dependencies {
 
 publishing {
   repositories {
+    mavenLocal()
     configure(releaseRepos)
   }
   publications {
