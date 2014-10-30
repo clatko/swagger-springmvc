@@ -26,6 +26,16 @@ public class ClassOrApiAnnotationResourceGrouping implements ResourceGroupingStr
   }
 
   @Override
+  public String getApiVersion(RequestMappingInfo requestMappingInfo, HandlerMethod handlerMethod) {
+      Class<?> controllerClass = handlerMethod.getBeanType();
+      Api apiAnnotation = AnnotationUtils.findAnnotation(controllerClass, Api.class);
+      if(null != apiAnnotation && !isBlank(apiAnnotation.value())) {
+          return apiAnnotation.apiVersion();
+      }
+      return "1";
+  }
+
+  @Override
   public String getResourceDescription(RequestMappingInfo requestMappingInfo, HandlerMethod handlerMethod) {
     Class<?> controllerClass = handlerMethod.getBeanType();
     String group = splitCamelCase(controllerClass.getSimpleName(), " ");

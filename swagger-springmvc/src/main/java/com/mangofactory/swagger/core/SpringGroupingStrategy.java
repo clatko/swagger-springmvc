@@ -3,6 +3,7 @@ package com.mangofactory.swagger.core;
 import com.google.common.base.Optional;
 import com.mangofactory.swagger.scanners.ResourceGroup;
 import com.wordnik.swagger.annotations.Api;
+
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
@@ -23,7 +24,12 @@ import static java.util.Arrays.*;
  * - Controllers without top level request mappings
  */
 public class SpringGroupingStrategy implements ResourceGroupingStrategy {
-  @Override
+    @Override
+    public String getApiVersion(RequestMappingInfo requestMappingInfo, HandlerMethod handlerMethod) {
+        return getApiVersion(handlerMethod);
+    }
+
+    @Override
   public Set<ResourceGroup> getResourceGroups(RequestMappingInfo requestMappingInfo, HandlerMethod handlerMethod) {
     return groups(handlerMethod);
   }
@@ -74,4 +80,19 @@ public class SpringGroupingStrategy implements ResourceGroupingStrategy {
     }
     return description;
   }
+
+  private String getApiVersion(HandlerMethod handlerMethod) {
+      Class<?> controllerClass = handlerMethod.getBeanType();
+      Api apiAnnotation = AnnotationUtils.findAnnotation(controllerClass, Api.class);
+      String apiVersion = "1";
+      if(null != apiAnnotation) {
+        String versionFromAnnotation = Optional.fromNullable(emptyToNull(apiAnnotation.apiVersion()))
+                .or(apiAnnotation.description());
+        if (!isNullOrEmpty(versionFromAnnotation)) {
+          return versionFromAnnotation;
+        }
+      }
+      return apiVersion;
+    }
+
 }

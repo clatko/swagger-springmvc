@@ -8,6 +8,7 @@ import com.mangofactory.swagger.ordering.OperationPositionalOrdering;
 import com.mangofactory.swagger.readers.operation.DefaultResponseMessageReader;
 import com.mangofactory.swagger.readers.operation.OperationAuthReader;
 import com.mangofactory.swagger.readers.operation.OperationDeprecatedReader;
+import com.mangofactory.swagger.readers.operation.OperationExampleReader;
 import com.mangofactory.swagger.readers.operation.OperationHttpMethodReader;
 import com.mangofactory.swagger.readers.operation.OperationImplicitParameterReader;
 import com.mangofactory.swagger.readers.operation.OperationImplicitParametersReader;
@@ -22,6 +23,7 @@ import com.mangofactory.swagger.scanners.RequestMappingContext;
 import com.wordnik.swagger.model.Authorization;
 import com.wordnik.swagger.model.Operation;
 import com.wordnik.swagger.model.Parameter;
+
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
@@ -73,6 +75,7 @@ public class ApiOperationReader implements Command<RequestMappingContext> {
     commandList.add(new OperationHttpMethodReader());
     commandList.add(new OperationSummaryReader());
     commandList.add(new OperationNotesReader());
+    commandList.add(new OperationExampleReader());
     commandList.add(new OperationResponseClassReader());
     commandList.add(new OperationNicknameReader());
     commandList.add(new OperationPositionReader());
@@ -111,6 +114,7 @@ public class ApiOperationReader implements Command<RequestMappingContext> {
               (String) operationResultMap.get("httpRequestMethod"),
               (String) operationResultMap.get("summary"),
               (String) operationResultMap.get("notes"),
+              (String) operationResultMap.get("example"),
               (String) operationResultMap.get("responseClass"),
               (String) operationResultMap.get("nickname"),
               (Integer) operationResultMap.get("position"),

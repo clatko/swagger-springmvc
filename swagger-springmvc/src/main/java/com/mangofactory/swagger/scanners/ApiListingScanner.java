@@ -20,8 +20,12 @@ import com.wordnik.swagger.model.ApiDescription;
 import com.wordnik.swagger.model.ApiListing;
 import com.wordnik.swagger.model.Authorization;
 import com.wordnik.swagger.model.Model;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+
 import scala.Option;
 
 import java.util.ArrayList;
@@ -41,7 +45,7 @@ import static com.mangofactory.swagger.ScalaUtils.*;
 public class ApiListingScanner {
   private static final Logger log = LoggerFactory.getLogger(ApiListingScanner.class);
 
-  private String apiVersion = "1.0";
+  private String apiVersion = "5.0";
   private String swaggerVersion = SwaggerSpec.version();
   private Map<ResourceGroup, List<RequestMappingContext>> resourceGroupRequestMappings;
   private SwaggerPathProvider swaggerPathProvider;
@@ -65,10 +69,15 @@ public class ApiListingScanner {
     this.customAnnotationReaders = customAnnotationReaders;
   }
 
-  public Map<String, ApiListing> scan() {
+
+public Map<String, ApiListing> scan() {
     Map<String, ApiListing> apiListingMap = newHashMap();
     int position = 0;
 
+    if(null == resourceGroupingStrategy) {
+        log.error("resourceGroupRequestMappings should not be null.");  
+    }
+    
     if (null == resourceGroupRequestMappings) {
       log.error("resourceGroupRequestMappings should not be null.");
     } else {
@@ -86,8 +95,15 @@ public class ApiListingScanner {
         readers.add(new ApiModelReader(modelProvider));
 
         Map<String, Model> models = new LinkedHashMap<String, Model>();
+        String apiVersion = this.apiVersion;
+        String description = null;
         for (RequestMappingContext each : entry.getValue()) {
-
+            RequestMappingInfo requestMappingInfo = each.getRequestMappingInfo();
+            HandlerMethod handlerMethod = each.getHandlerMethod();
+            apiVersion = 
+                    resourceGroupingStrategy.getApiVersion(requestMappingInfo, handlerMethod);            
+            description = 
+                    resourceGroupingStrategy.getResourceDescription(requestMappingInfo, handlerMethod);            
           CommandExecutor<Map<String, Object>, RequestMappingContext> commandExecutor = new CommandExecutor();
           each.put("authorizationContext", authorizationContext);
           each.put("swaggerGlobalSettings", swaggerGlobalSettings);
@@ -131,7 +147,7 @@ public class ApiListingScanner {
                 authorizations,
                 toScalaList(sortedDescriptions),
                 modelOption,
-                toOption(null),
+                toOption(description),
                 position++);
 
         apiListingMap.put(resourceGroup.getGroupName(), apiListing);
