@@ -5,16 +5,16 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 
-public class OperationExampleReader implements RequestMappingReader {
+public class OperationSampleReader implements RequestMappingReader {
     @Override
     public void execute(RequestMappingContext context) {
-        String example = "";
+        String sample = "";
 
         HandlerMethod handlerMethod = context.getHandlerMethod();
         ApiOperation methodAnnotation = handlerMethod.getMethodAnnotation(ApiOperation.class);
-        if ((null != methodAnnotation) && !StringUtils.isBlank(methodAnnotation.example())) {
-            example = methodAnnotation.example();
+        if ((null != methodAnnotation) && !StringUtils.isBlank(methodAnnotation.sample())) {
+            sample = methodAnnotation.sample();
         }
-        context.put("example", example);
+        context.put("sample", sample);
     }
 }

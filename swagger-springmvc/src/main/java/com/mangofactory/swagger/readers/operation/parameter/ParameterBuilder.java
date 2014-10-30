@@ -63,9 +63,10 @@ class ParameterBuilder {
             Boolean.FALSE,  //required
             Boolean.FALSE,  //allow multiple
             dataTypeName,   //data type
-            allowable,           //allowable values
+            allowable,      //allowable values
             "query",        //param type
-            "string",        //param type
+            "string",       //true type
+            "",             //sample
             toOption(null)  //param access
     );
 
@@ -85,6 +86,7 @@ class ParameterBuilder {
             allowable,
             "query", //param type
             apiParam.trueType(),
+            apiParam.sample(),
             toOption(apiParam.access()));
   }
 
@@ -101,6 +103,7 @@ class ParameterBuilder {
             allowable,
             "query", //param type
             "string",
+            "",
             toOption(apiModelProperty.access()));
   }
 

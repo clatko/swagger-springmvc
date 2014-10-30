@@ -8,7 +8,6 @@ import com.mangofactory.swagger.ordering.OperationPositionalOrdering;
 import com.mangofactory.swagger.readers.operation.DefaultResponseMessageReader;
 import com.mangofactory.swagger.readers.operation.OperationAuthReader;
 import com.mangofactory.swagger.readers.operation.OperationDeprecatedReader;
-import com.mangofactory.swagger.readers.operation.OperationExampleReader;
 import com.mangofactory.swagger.readers.operation.OperationHttpMethodReader;
 import com.mangofactory.swagger.readers.operation.OperationImplicitParameterReader;
 import com.mangofactory.swagger.readers.operation.OperationImplicitParametersReader;
@@ -16,6 +15,7 @@ import com.mangofactory.swagger.readers.operation.OperationNicknameReader;
 import com.mangofactory.swagger.readers.operation.OperationNotesReader;
 import com.mangofactory.swagger.readers.operation.OperationPositionReader;
 import com.mangofactory.swagger.readers.operation.OperationResponseClassReader;
+import com.mangofactory.swagger.readers.operation.OperationSampleReader;
 import com.mangofactory.swagger.readers.operation.OperationSummaryReader;
 import com.mangofactory.swagger.readers.operation.RequestMappingReader;
 import com.mangofactory.swagger.readers.operation.parameter.OperationParameterReader;
@@ -75,7 +75,7 @@ public class ApiOperationReader implements Command<RequestMappingContext> {
     commandList.add(new OperationHttpMethodReader());
     commandList.add(new OperationSummaryReader());
     commandList.add(new OperationNotesReader());
-    commandList.add(new OperationExampleReader());
+    commandList.add(new OperationSampleReader());
     commandList.add(new OperationResponseClassReader());
     commandList.add(new OperationNicknameReader());
     commandList.add(new OperationPositionReader());
@@ -114,7 +114,7 @@ public class ApiOperationReader implements Command<RequestMappingContext> {
               (String) operationResultMap.get("httpRequestMethod"),
               (String) operationResultMap.get("summary"),
               (String) operationResultMap.get("notes"),
-              (String) operationResultMap.get("example"),
+              (String) operationResultMap.get("sample"),
               (String) operationResultMap.get("responseClass"),
               (String) operationResultMap.get("nickname"),
               (Integer) operationResultMap.get("position"),

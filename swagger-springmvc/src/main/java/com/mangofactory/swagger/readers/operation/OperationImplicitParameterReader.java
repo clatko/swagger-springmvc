@@ -39,6 +39,7 @@ public class OperationImplicitParameterReader extends SwaggerParameterReader {
             ParameterAllowableReader.allowableValueFromString(param.allowableValues()),
             param.paramType(),
             param.trueType(),
+            param.sample(),
             toOption(param.access())
     );
   }

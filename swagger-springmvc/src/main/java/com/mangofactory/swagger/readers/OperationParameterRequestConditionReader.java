@@ -37,6 +37,7 @@ public class OperationParameterRequestConditionReader implements RequestMappingR
                       "string"),
               "query",
               "string",
+              "",
               toOption("")
       );
 
