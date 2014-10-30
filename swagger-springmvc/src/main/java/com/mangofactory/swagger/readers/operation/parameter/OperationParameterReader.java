@@ -41,6 +41,7 @@ public class OperationParameterReader extends SwaggerParameterReader {
     commandList.add(new ParameterDescriptionReader());
     commandList.add(new ParameterMultiplesReader());
     commandList.add(new ParameterNameReader());
+    commandList.add(new ParameterTrueTypeReader());
     commandList.add(new ParameterRequiredReader());
 
     ModelAttributeParameterExpander expander = new ModelAttributeParameterExpander();
@@ -71,6 +72,7 @@ public class OperationParameterReader extends SwaggerParameterReader {
                   (String) result.get("dataType"),
                   (AllowableValues) result.get("allowableValues"),
                   (String) result.get("paramType"),
+                  (String) result.get("trueType"),
                   toOption(result.get("paramAccess"))
           );
           parameters.add(parameter);

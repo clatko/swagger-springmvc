@@ -65,6 +65,7 @@ class ParameterBuilder {
             dataTypeName,   //data type
             allowable,           //allowable values
             "query",        //param type
+            "string",        //param type
             toOption(null)  //param access
     );
 
@@ -83,6 +84,7 @@ class ParameterBuilder {
             dataTypeName,
             allowable,
             "query", //param type
+            apiParam.trueType(),
             toOption(apiParam.access()));
   }
 
@@ -98,6 +100,7 @@ class ParameterBuilder {
             dataTypeName,
             allowable,
             "query", //param type
+            "string",
             toOption(apiModelProperty.access()));
   }
 

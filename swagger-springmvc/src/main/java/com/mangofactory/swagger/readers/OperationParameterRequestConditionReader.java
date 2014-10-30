@@ -36,6 +36,7 @@ public class OperationParameterRequestConditionReader implements RequestMappingR
               new AllowableListValues(collectionAsScalaIterable(newArrayList(expression.getValue())).toList(),
                       "string"),
               "query",
+              "string",
               toOption("")
       );
 
