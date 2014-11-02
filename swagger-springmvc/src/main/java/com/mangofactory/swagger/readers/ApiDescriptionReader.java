@@ -41,9 +41,10 @@ public class ApiDescriptionReader implements Command<RequestMappingContext> {
       context.put("requestMappingPattern", cleanedRequestMappingPath);
       ApiOperationReader apiOperationReader = new ApiOperationReader(customAnnotationReaders);
       apiOperationReader.execute(context);
+      Integer position = (Integer) context.get("position");
       Boolean hidden = Boolean.parseBoolean((String) context.get("hidden"));
       List<Operation> operations = (List<Operation>) context.get("operations");
-      apiDescriptionList.add(new ApiDescription(path, toOption(methodName), toScalaList(operations), hidden));
+      apiDescriptionList.add(new ApiDescription(path, toOption(methodName), position, toScalaList(operations), hidden));
     }
     context.put("apiDescriptionList", apiDescriptionList);
   }

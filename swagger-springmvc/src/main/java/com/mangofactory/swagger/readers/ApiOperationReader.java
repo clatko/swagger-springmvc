@@ -89,6 +89,7 @@ public class ApiOperationReader implements Command<RequestMappingContext> {
     commandList.add(new OperationDeprecatedReader());
     commandList.addAll(customAnnotationReaders);
     Integer currentCount = 0;
+    Integer position = 0;
     for (RequestMethod httpRequestMethod : supportedMethods) {
       CommandExecutor<Map<String, Object>, RequestMappingContext> commandExecutor = new CommandExecutor();
 
@@ -105,6 +106,7 @@ public class ApiOperationReader implements Command<RequestMappingContext> {
 
       Map<String, Object> operationResultMap = operationRequestMappingContext.getResult();
       currentCount = (Integer) operationResultMap.get("currentCount");
+      position = (Integer) operationResultMap.get("position");
 
       List<Sample> samples = (List<Sample>) operationResultMap.get("samples");
       List<String> producesMediaTypes = (List<String>) operationResultMap.get("produces");
@@ -133,6 +135,7 @@ public class ApiOperationReader implements Command<RequestMappingContext> {
     }
     Collections.sort(operations, OPERATION_POSITIONAL_ORDERING);
     outerContext.put("operations", operations);
+    outerContext.put("position", position);
   }
 
 }
