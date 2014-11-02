@@ -15,7 +15,7 @@ import com.mangofactory.swagger.readers.operation.OperationNicknameReader;
 import com.mangofactory.swagger.readers.operation.OperationNotesReader;
 import com.mangofactory.swagger.readers.operation.OperationPositionReader;
 import com.mangofactory.swagger.readers.operation.OperationResponseClassReader;
-import com.mangofactory.swagger.readers.operation.OperationSampleReader;
+import com.mangofactory.swagger.readers.operation.OperationSamplesReader;
 import com.mangofactory.swagger.readers.operation.OperationSummaryReader;
 import com.mangofactory.swagger.readers.operation.RequestMappingReader;
 import com.mangofactory.swagger.readers.operation.parameter.OperationParameterReader;
@@ -23,6 +23,7 @@ import com.mangofactory.swagger.scanners.RequestMappingContext;
 import com.wordnik.swagger.model.Authorization;
 import com.wordnik.swagger.model.Operation;
 import com.wordnik.swagger.model.Parameter;
+import com.wordnik.swagger.model.Sample;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
@@ -75,7 +76,7 @@ public class ApiOperationReader implements Command<RequestMappingContext> {
     commandList.add(new OperationHttpMethodReader());
     commandList.add(new OperationSummaryReader());
     commandList.add(new OperationNotesReader());
-    commandList.add(new OperationSampleReader());
+    commandList.add(new OperationSamplesReader());
     commandList.add(new OperationResponseClassReader());
     commandList.add(new OperationNicknameReader());
     commandList.add(new OperationPositionReader());
@@ -105,6 +106,7 @@ public class ApiOperationReader implements Command<RequestMappingContext> {
       Map<String, Object> operationResultMap = operationRequestMappingContext.getResult();
       currentCount = (Integer) operationResultMap.get("currentCount");
 
+      List<Sample> samples = (List<Sample>) operationResultMap.get("samples");
       List<String> producesMediaTypes = (List<String>) operationResultMap.get("produces");
       List<String> consumesMediaTypes = (List<String>) operationResultMap.get("consumes");
       List<Parameter> parameterList = (List<Parameter>) operationResultMap.get("parameters");
@@ -114,7 +116,7 @@ public class ApiOperationReader implements Command<RequestMappingContext> {
               (String) operationResultMap.get("httpRequestMethod"),
               (String) operationResultMap.get("summary"),
               (String) operationResultMap.get("notes"),
-              (String) operationResultMap.get("sample"),
+              toScalaList(samples),
               (String) operationResultMap.get("responseClass"),
               (String) operationResultMap.get("nickname"),
               (Integer) operationResultMap.get("position"),
