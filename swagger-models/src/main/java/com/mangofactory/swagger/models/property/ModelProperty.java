@@ -3,6 +3,7 @@ package com.mangofactory.swagger.models.property;
 import com.fasterxml.classmate.ResolvedType;
 import com.mangofactory.swagger.models.ModelContext;
 import com.wordnik.swagger.model.AllowableValues;
+
 import scala.Option;
 
 public interface ModelProperty {
@@ -19,4 +20,6 @@ public interface ModelProperty {
   Option<String> propertyDescription();
 
   boolean isRequired();
+
+  int position();
 }

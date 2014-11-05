@@ -81,6 +81,11 @@ public abstract class BaseModelProperty implements ModelProperty {
     return Option.apply(description);
   }
 
+  @Override
+  public int position() {
+    return apiModelProperty.transform(toPosition()).or(0);
+  }
+
   protected Optional<ApiModelProperty> getApiModelProperty() {
     return apiModelProperty;
   }
