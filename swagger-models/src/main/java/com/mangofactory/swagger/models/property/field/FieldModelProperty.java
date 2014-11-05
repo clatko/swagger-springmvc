@@ -15,7 +15,7 @@ public class FieldModelProperty extends BaseModelProperty {
       ResolvedField childField,
       AlternateTypeProvider alternateTypeProvider) {
 
-    super(fieldName, alternateTypeProvider, findApiModePropertyAnnotation(childField.getRawMember()));
+    super(fieldName, alternateTypeProvider, findApiModelPropertyAnnotation(childField.getRawMember()));
     this.childField = childField;
   }
 
@@ -23,4 +23,5 @@ public class FieldModelProperty extends BaseModelProperty {
   protected ResolvedType realType() {
     return childField.getType();
   }
+
 }

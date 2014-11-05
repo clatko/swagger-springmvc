@@ -37,7 +37,7 @@ public class Annotations {
     return annotation;
   }
 
-  public static Optional<ApiModelProperty> findApiModePropertyAnnotation(AnnotatedElement annotated) {
+  public static Optional<ApiModelProperty> findApiModelPropertyAnnotation(AnnotatedElement annotated) {
     return Optional.fromNullable(AnnotationUtils.getAnnotation(annotated, ApiModelProperty.class));
   }
 
