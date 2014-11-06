@@ -42,7 +42,7 @@ class ParameterBuilder {
   }
 
   public Parameter build() {
-    Optional<ApiModelProperty> apiModelPropertyOptional = Annotations.findApiModePropertyAnnotation(field);
+    Optional<ApiModelProperty> apiModelPropertyOptional = Annotations.findApiModelPropertyAnnotation(field);
     if (apiModelPropertyOptional.isPresent()) {
       return fromApiModelProperty(apiModelPropertyOptional.get());
     }
