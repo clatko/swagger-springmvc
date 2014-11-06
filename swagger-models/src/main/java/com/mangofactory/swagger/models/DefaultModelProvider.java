@@ -63,14 +63,17 @@ public class DefaultModelProvider implements ModelProvider {
     Map<String, ModelProperty> properties = newLinkedHashMap();
 
     for (com.mangofactory.swagger.models.property.ModelProperty each : properties(modelContext, propertiesHost)) {
-      properties.put(each.getName(), new ModelProperty(each.typeName(modelContext),
+      if(!each.isHidden()) {
+        properties.put(each.getName(), new ModelProperty(each.typeName(modelContext),
               each.qualifiedTypeName(),
               each.position(),
               each.isRequired(),
               each.propertyDescription(),
               each.allowableValues(),
-              itemModelRef(each.getType())
+              itemModelRef(each.getType()),
+              each.isHidden()
       ));
+      }
     }
 
     // to list/sort

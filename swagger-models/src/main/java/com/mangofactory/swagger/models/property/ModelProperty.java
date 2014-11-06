@@ -22,4 +22,6 @@ public interface ModelProperty {
   boolean isRequired();
 
   int position();
+
+  boolean isHidden();
 }

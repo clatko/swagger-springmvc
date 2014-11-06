@@ -74,6 +74,10 @@ public abstract class BaseModelProperty implements ModelProperty {
     return apiModelProperty.transform(toIsRequired()).or(false);
   }
 
+  @Override
+  public boolean isHidden() {
+    return apiModelProperty.transform(toIsHidden()).or(false);
+  }
 
   @Override
   public Option<String> propertyDescription() {
