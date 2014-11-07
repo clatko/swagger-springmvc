@@ -29,8 +29,10 @@ public class ParameterRequiredReader implements Command<RequestMappingContext> {
 
     if (null != methodAnnotations) {
       for (Annotation annotation : methodAnnotations) {
+          // ApiParam, if present, should have final say
         if (annotation instanceof ApiParam) {
           requiredSet.add(((ApiParam) annotation).required());
+          break;
         } else if (annotation instanceof RequestParam) {
           requiredSet.add(!optional && ((RequestParam) annotation).required());
         } else if (annotation instanceof RequestHeader) {
