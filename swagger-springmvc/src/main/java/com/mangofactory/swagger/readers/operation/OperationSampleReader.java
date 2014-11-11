@@ -30,6 +30,7 @@ public class OperationSampleReader extends SwaggerSamplesReader {
   public static Sample getApiSample(ApiSample param) {
     return new Sample(
             param.value(),
+            param.path(),
             param.language()
     );
   }
