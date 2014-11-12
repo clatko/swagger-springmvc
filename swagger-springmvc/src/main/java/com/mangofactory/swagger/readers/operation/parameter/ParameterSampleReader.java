@@ -13,7 +13,7 @@ public class ParameterSampleReader implements Command<RequestMappingContext> {
     MethodParameter methodParameter = (MethodParameter) context.get("methodParameter");
     ApiParam apiParam = methodParameter.getParameterAnnotation(ApiParam.class);
     String sample = "";
-    if (null != apiParam && !isBlank(apiParam.trueType())) {
+    if (null != apiParam && !isBlank(apiParam.sample())) {
         sample = apiParam.sample();
     }
     context.put("sample", sample);
