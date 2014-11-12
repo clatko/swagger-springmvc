@@ -5,10 +5,15 @@ import com.mangofactory.swagger.readers.operation.RequestMappingReader;
 import com.mangofactory.swagger.scanners.RequestMappingContext;
 import com.wordnik.swagger.model.ApiDescription;
 import com.wordnik.swagger.model.Operation;
+import com.wordnik.swagger.model.Parameter;
 
+import org.joda.time.DateTime;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+
+import scala.Option;
+import scala.collection.Iterator;
 
 import java.util.Collection;
 import java.util.List;
@@ -44,7 +49,34 @@ public class ApiDescriptionReader implements Command<RequestMappingContext> {
       Integer position = (Integer) context.get("position");
       Boolean hidden = Boolean.parseBoolean((String) context.get("hidden"));
       List<Operation> operations = (List<Operation>) context.get("operations");
-      apiDescriptionList.add(new ApiDescription(path, toOption(methodName), position, toScalaList(operations), hidden));
+      
+      String fullSample = path;
+      for(Operation operation: operations) {
+          scala.collection.immutable.List<Parameter> parameters = operation.parameters();
+          Iterator<Parameter> it = parameters.iterator();
+          while(it.hasNext()) {
+              Parameter parameter = it.next();
+              String name = parameter.name();
+              scala.Option<String> defaultValue = parameter.defaultValue();
+              String sample = parameter.sample();
+              String replaceText = "{FAIL}";
+              String trueType = parameter.trueType();
+              if(!defaultValue.get().equals("")) {
+                  replaceText = defaultValue.get();
+                  if(trueType.equals("datetime")) {
+                      DateTime tmp = new DateTime();
+                      replaceText = tmp.plusSeconds(Integer.parseInt(replaceText)).toString();
+                  }
+              } else if(!sample.equals("")) {
+                  replaceText = sample;
+              }
+              fullSample = fullSample.replace("{"+name+"}", replaceText);
+              fullSample.toCharArray();
+          }
+      }
+      apiDescriptionList.add(new ApiDescription(path, fullSample, 
+              toOption(methodName), position, toScalaList(operations), hidden));
+      
     }
     context.put("apiDescriptionList", apiDescriptionList);
   }
