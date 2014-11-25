@@ -63,6 +63,13 @@ public class ApiDescriptionReader implements Command<RequestMappingContext> {
               String sample = parameter.sample();
               String replaceText = "{FAIL}";
               String trueType = parameter.trueType();
+              String paramType = parameter.paramType();
+              // add query string
+              if(paramType.equals("query")) {
+                  fullSample += (!fullSample.contains("?")) ? "?": "&";
+                  fullSample += name+"={"+name+"}";
+              }
+              
               if(!defaultValue.get().equals("")) {
                   replaceText = defaultValue.get();
                   if(trueType.equals("datetime")) {
