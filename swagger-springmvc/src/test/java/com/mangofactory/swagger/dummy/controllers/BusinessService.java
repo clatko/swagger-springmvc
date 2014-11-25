@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@Api(value = "", description = "Services to demonstrate path variable resolution")
+@Api(value = "", description = "Services to demonstrate path variable resolution", title = "")
 public class BusinessService {
 
   @RequestMapping(value = "/businesses/aliased/{otherId}", method = RequestMethod.GET)

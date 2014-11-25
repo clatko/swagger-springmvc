@@ -25,7 +25,7 @@ import static com.google.common.collect.Lists.*;
 
 @Controller
 @RequestMapping("/features")
-@Api(value = "", description = "Demonstration of features", basePath = "features")
+@Api(value = "", description = "Demonstration of features", basePath = "features", title = "")
 public class FeatureDemonstrationService {
 
   //Uses alternate listing path

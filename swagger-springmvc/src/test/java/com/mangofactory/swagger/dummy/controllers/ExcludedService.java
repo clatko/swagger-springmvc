@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/excluded")
-@Api(value = "", description = "Operations that are exluded")
+@Api(value = "", description = "Operations that are exluded", title = "")
 public class ExcludedService {
   @RequestMapping(method = RequestMethod.POST)
   public void someExcludedOperation(

@@ -36,6 +36,16 @@ public class ClassOrApiAnnotationResourceGrouping implements ResourceGroupingStr
   }
 
   @Override
+  public String getResourceTitle(RequestMappingInfo requestMappingInfo, HandlerMethod handlerMethod) {
+    Class<?> controllerClass = handlerMethod.getBeanType();
+    Api apiAnnotation = AnnotationUtils.findAnnotation(controllerClass, Api.class);
+    if (null != apiAnnotation && !isBlank(apiAnnotation.title())) {
+      return apiAnnotation.title();
+    }
+    return "";
+  }
+
+  @Override
   public String getResourceDescription(RequestMappingInfo requestMappingInfo, HandlerMethod handlerMethod) {
     Class<?> controllerClass = handlerMethod.getBeanType();
     String group = splitCamelCase(controllerClass.getSimpleName(), " ");
@@ -54,9 +64,10 @@ public class ClassOrApiAnnotationResourceGrouping implements ResourceGroupingStr
 
   @Override
   public Set<ResourceGroup> getResourceGroups(RequestMappingInfo requestMappingInfo, HandlerMethod handlerMethod) {
+    String title = getResourceTitle(requestMappingInfo, handlerMethod);
     String group = getClassOrApiAnnotationValue(handlerMethod).toLowerCase().replaceAll(" ", "-");
     Integer position = getResourcePosition(requestMappingInfo, handlerMethod);
-    return newHashSet(new ResourceGroup(group.toLowerCase(), position));
+    return newHashSet(new ResourceGroup(title, group.toLowerCase(), position));
   }
 
   private String getClassOrApiAnnotationValue(HandlerMethod handlerMethod) {

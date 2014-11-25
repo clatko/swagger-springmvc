@@ -27,7 +27,7 @@ import static com.google.common.collect.Lists.*;
 
 @Controller
 @RequestMapping("/pets")
-@Api(value = "", description = "Operations about pets")
+@Api(value = "", description = "Operations about pets", title = "")
 public class PetService {
 
   @RequestMapping(value = "/{petId}", method = RequestMethod.GET)

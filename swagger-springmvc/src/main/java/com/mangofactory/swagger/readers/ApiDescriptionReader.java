@@ -8,6 +8,8 @@ import com.wordnik.swagger.model.Operation;
 import com.wordnik.swagger.model.Parameter;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -64,8 +66,9 @@ public class ApiDescriptionReader implements Command<RequestMappingContext> {
               if(!defaultValue.get().equals("")) {
                   replaceText = defaultValue.get();
                   if(trueType.equals("datetime")) {
-                      DateTime tmp = new DateTime();
-                      replaceText = tmp.plusSeconds(Integer.parseInt(replaceText)).toString();
+                      DateTime tmp = new DateTime(DateTimeZone.UTC);
+                      replaceText = ISODateTimeFormat.dateTimeNoMillis().withZoneUTC().
+                              print(tmp.plusSeconds(Integer.parseInt(replaceText)));
                   }
               } else if(!sample.equals("")) {
                   replaceText = sample;

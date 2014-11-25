@@ -25,6 +25,11 @@ import static java.util.Arrays.*;
  */
 public class SpringGroupingStrategy implements ResourceGroupingStrategy {
     @Override
+    public String getResourceTitle(RequestMappingInfo requestMappingInfo, HandlerMethod handlerMethod) {
+        return "";
+    }
+
+    @Override
     public String getApiVersion(RequestMappingInfo requestMappingInfo, HandlerMethod handlerMethod) {
         return getApiVersion(handlerMethod);
     }

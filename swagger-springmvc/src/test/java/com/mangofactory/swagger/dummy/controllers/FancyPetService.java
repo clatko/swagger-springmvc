@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/fancypets")
-@Api(value = "Fancy Pet Service", description = "Operations about fancy pets")
+@Api(value = "Fancy Pet Service", description = "Operations about fancy pets", title = "")
 public class FancyPetService extends AbstractPetService<FancyPet> {
 
   // some subclass dependency here

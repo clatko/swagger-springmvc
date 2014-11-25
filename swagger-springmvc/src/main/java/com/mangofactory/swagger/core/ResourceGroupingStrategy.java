@@ -9,6 +9,7 @@ import java.util.Set;
 
 public interface ResourceGroupingStrategy {
     public String getApiVersion(RequestMappingInfo requestMappingInfo, HandlerMethod handlerMethod);
+    public String getResourceTitle(RequestMappingInfo requestMappingInfo, HandlerMethod handlerMethod);
     /**
    * Gets the resource group for a particular request mapping.
    * Typically several requestMappings will live under a particular resource group.

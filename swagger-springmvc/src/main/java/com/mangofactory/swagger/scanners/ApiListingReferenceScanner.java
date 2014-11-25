@@ -93,11 +93,12 @@ public class ApiListingReferenceScanner {
     for (ResourceGroup resourceGroup : resourceGroupDescriptions.keySet()) {
       String resourceGroupName = resourceGroup.getGroupName();
       String listingDescription = resourceGroupDescriptions.get(resourceGroup);
+      String title = resourceGroup.getTitle();
       Integer position = resourceGroup.getPosition();
       String path = swaggerPathProvider.getResourceListingPath(swaggerGroup, resourceGroupName);
       log.info("Created resource listing Path: {} Description: {} Position: {}",
               path, resourceGroupName, position);
-      this.apiListingReferences.add(new ApiListingReference(path, toOption(listingDescription), position));
+      this.apiListingReferences.add(new ApiListingReference(title, path, toOption(listingDescription), position));
     }
   }
 

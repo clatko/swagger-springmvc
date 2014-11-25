@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 public class ResourceGroup {
+  private String title;
   private String groupName;
   private Integer position = 0;
 
@@ -11,12 +12,21 @@ public class ResourceGroup {
     this.groupName = groupName;
   }
 
-  public ResourceGroup(String groupName, Integer position) {
+  public ResourceGroup(String title, String groupName, Integer position) {
+    this.title = title;
     this.groupName = groupName;
     this.position = position;
   }
 
-  public String getGroupName() {
+  public void setTitle(String title) {
+      this.title = title;
+    }
+
+    public String getTitle() {
+      return title;
+    }
+
+    public String getGroupName() {
     return groupName;
   }
 

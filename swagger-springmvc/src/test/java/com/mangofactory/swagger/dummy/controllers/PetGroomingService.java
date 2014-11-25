@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Controller
 //Demonstrates multiple request mappings at the controller level
 @RequestMapping({"/petgrooming", "/pets/grooming", "/pets"})
-@Api(value = "", description = "Grooming operations for pets")
+@Api(value = "", description = "Grooming operations for pets", title = "")
 public class PetGroomingService {
 
   @RequestMapping(method = RequestMethod.GET)
