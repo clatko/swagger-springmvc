@@ -7,14 +7,10 @@ import com.wordnik.swagger.model.ApiDescription;
 import com.wordnik.swagger.model.Operation;
 import com.wordnik.swagger.model.Parameter;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
-import scala.Option;
 import scala.collection.Iterator;
 
 import java.util.Collection;
@@ -70,14 +66,16 @@ public class ApiDescriptionReader implements Command<RequestMappingContext> {
                   fullSample += name+"={"+name+"}";
               }
               
-              if(!defaultValue.get().equals("")) {
+              if(!defaultValue.get().equals("") && !trueType.equals("datetime")) {
                   replaceText = defaultValue.get();
-                  if(trueType.equals("datetime")) {
-                      DateTime tmp = new DateTime(DateTimeZone.UTC);
-                      replaceText = ISODateTimeFormat.dateTimeNoMillis().withZoneUTC().
-                              print(tmp.plusSeconds(Integer.parseInt(replaceText)));
-                  }
+//                  if(trueType.equals("datetime")) {
+//                      replaceText = sample;
+//                      DateTime tmp = new DateTime(DateTimeZone.UTC);
+//                      replaceText = ISODateTimeFormat.dateTimeNoMillis().withZoneUTC().
+//                              print(tmp.plusSeconds(Integer.parseInt(replaceText)));
+//                  }
               } else if(!sample.equals("")) {
+                  // we have a generated sample for datetime
                   replaceText = sample;
               }
               fullSample = fullSample.replace("{"+name+"}", replaceText);
