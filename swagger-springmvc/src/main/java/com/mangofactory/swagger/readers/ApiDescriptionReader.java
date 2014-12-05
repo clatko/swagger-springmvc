@@ -58,7 +58,6 @@ public class ApiDescriptionReader implements Command<RequestMappingContext> {
               scala.Option<String> defaultValue = parameter.defaultValue();
               String sample = parameter.sample();
               String replaceText = "{FAIL}";
-              String trueType = parameter.trueType();
               String paramType = parameter.paramType();
               // add query string
               if(paramType.equals("query")) {
@@ -66,7 +65,10 @@ public class ApiDescriptionReader implements Command<RequestMappingContext> {
                   fullSample += name+"={"+name+"}";
               }
               
-              if(!defaultValue.get().equals("") && !trueType.equals("datetime")) {
+              if(!sample.equals("")) {
+                  // we have a generated sample for datetime
+                  replaceText = sample;
+              } else if(!defaultValue.get().equals("")) {
                   replaceText = defaultValue.get();
 //                  if(trueType.equals("datetime")) {
 //                      replaceText = sample;
@@ -74,9 +76,6 @@ public class ApiDescriptionReader implements Command<RequestMappingContext> {
 //                      replaceText = ISODateTimeFormat.dateTimeNoMillis().withZoneUTC().
 //                              print(tmp.plusSeconds(Integer.parseInt(replaceText)));
 //                  }
-              } else if(!sample.equals("")) {
-                  // we have a generated sample for datetime
-                  replaceText = sample;
               }
               fullSample = fullSample.replace("{"+name+"}", replaceText);
               fullSample.toCharArray();
