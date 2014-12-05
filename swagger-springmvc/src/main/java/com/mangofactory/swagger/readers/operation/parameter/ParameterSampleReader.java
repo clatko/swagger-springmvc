@@ -23,6 +23,9 @@ public class ParameterSampleReader implements Command<RequestMappingContext> {
             sample = ISODateTimeFormat.dateTimeNoMillis().withZoneUTC().
                     print(tmp.plusSeconds(Integer.parseInt(apiParam.defaultValue())));
         }
+        if(sample.equals("") && !apiParam.defaultValue().equals("")) {
+            sample = apiParam.defaultValue();
+        }
     }
     context.put("sample", sample);
   }
